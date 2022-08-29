@@ -12,7 +12,7 @@
     "test-dev": "jest src --watchAll",
     "build": "tsc",
     "test": "jest src --passWithNoTests",
-    "test-coverage": "jest src --coverage"
+    "test-coverage": "jest src --coverage --watchAll=falses"
   },
   "keywords": [],
   "author": "",
