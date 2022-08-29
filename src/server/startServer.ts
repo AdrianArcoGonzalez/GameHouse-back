@@ -3,7 +3,7 @@ import express from "express";
 import Debug from "debug";
 import chalk from "chalk";
 
-const debug = Debug("Users:startServer");
+const debug = Debug("GAMES:startServer");
 
 export const app = express();
 app.disable("x-powered-by");
