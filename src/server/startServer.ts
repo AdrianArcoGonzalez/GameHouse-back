@@ -6,6 +6,7 @@ import chalk from "chalk";
 const debug = Debug("Users:startServer");
 
 export const app = express();
+app.disable("x-powered-by");
 
 export const startServer = (port: number) =>
   new Promise((resolve, reject) => {
