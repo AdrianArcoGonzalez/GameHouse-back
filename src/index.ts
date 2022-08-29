@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import connectDatabase from "./database";
 import { app, startServer } from "./server/startServer";
 import generalError from "./server/middlewares/error";
+import usersRouter from "./server/routers/usersRouter";
 
 const debug = Debug("GAMES:");
 const port = process.env.PORT ?? 4500;
@@ -36,7 +37,7 @@ app.use((req, _res, next) => {
   next();
 });
 
-app.use("/users");
+app.use("/games/users", usersRouter);
 app.use("/", generalError);
 
 (async () => {
