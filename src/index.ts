@@ -21,6 +21,7 @@ app.use((req, _res, next) => {
   next();
 });
 
+app.use("/users");
 app.use("/", generalError);
 
 (async () => {
