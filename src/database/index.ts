@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Debug from "debug";
 import chalk from "chalk";
 
-const debug = Debug("ROBOTS:database");
+const debug = Debug("GAMES:conectDatabase:");
 
 const connectDatabase = (mongoUrl: string) =>
   new Promise((resolve, reject) => {
