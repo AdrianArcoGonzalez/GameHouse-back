@@ -11,8 +11,9 @@
     "prepare": "husky install",
     "test-dev": "jest src --watchAll",
     "build": "npm run ts",
-    "test": "jest src --passWithNoTests",
-    "test-coverage": "jest src --coverage --watchAll=falses"
+    "test": "jest src",
+    "test-coverage": "jest src --coverage --watchAll=false",
+    "jest-coverage": "jest src --coverage"
   },
   "engines": {
     "node": "^18.x"
