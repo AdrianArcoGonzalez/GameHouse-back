@@ -10,9 +10,9 @@ const generalError = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
-  const errorCode = error.statusCode ?? 404;
-  const publicMessage = error.publicmessage ?? "Endpoint not found";
-  const privateMessage = error.privatemessage ?? "Access error";
+  const errorCode = error.statusCode;
+  const publicMessage = error.publicmessage;
+  const privateMessage = error.privatemessage;
 
   res.status(errorCode).json({ publicMessage });
   debug(chalk.red(privateMessage));
