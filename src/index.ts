@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
   debug(chalk.blue(`A request arrived to ${req.url}`));
   next();
 });
