@@ -8,7 +8,10 @@
     "ts:dev": "tsc -w",
     "start": "node .",
     "start:dev": "nodemon -q",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test-dev": "jest src --watchAll",
+    "build": "tsc",
+    "test": "jest src --passWithNoTests"
   },
   "keywords": [],
   "author": "",
