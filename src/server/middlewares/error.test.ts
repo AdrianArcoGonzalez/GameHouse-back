@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import CustomError from "../interfaces/interfaces";
+import { CustomError } from "../../interfaces/interfaces";
 import generalError from "./error";
 
 describe("Given a general error function", () => {

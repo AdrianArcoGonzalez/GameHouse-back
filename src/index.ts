@@ -6,7 +6,7 @@ import chalk from "chalk";
 import morgan from "morgan";
 import connectDatabase from "./database";
 import { app, startServer } from "./server/startServer";
-import generalError from "./middlewares/error";
+import generalError from "./server/middlewares/error";
 
 const debug = Debug("GAMES:");
 const port = process.env.PORT ?? 4500;
