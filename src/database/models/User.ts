@@ -30,6 +30,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  games: {
+    type: [Schema.Types.ObjectId],
+  },
+  reviews: {
+    type: [Schema.Types.ObjectId],
+  },
 });
 
 userSchema.set("toJSON", {

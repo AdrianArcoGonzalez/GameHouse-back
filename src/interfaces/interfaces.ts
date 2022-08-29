@@ -12,4 +12,6 @@ export interface UserRegister {
   name: string;
   birthdate: Date;
   location: string;
+  games?: string[];
+  reviews?: string[];
 }
