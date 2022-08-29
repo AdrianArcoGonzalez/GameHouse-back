@@ -11,7 +11,7 @@
     "prepare": "husky install",
     "test-dev": "jest src --watchAll",
     "build": "npm run ts",
-    "test": "jest src --passWithNoTests",
+    "test": "jest src",
     "test-coverage": "jest src --coverage --watchAll=false",
     "jest-coverage": "jest src --coverage"
   },
