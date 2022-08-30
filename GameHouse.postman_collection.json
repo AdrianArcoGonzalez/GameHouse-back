@@ -1,0 +1,39 @@
+{
+  "info": {
+    "_postman_id": "b15ebbad-c468-4a40-82e5-f76eba1bfc5c",
+    "name": "GameHouse",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "22263879"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"admin\",\"password\": \"admin\", \"username\":\"admin\",\"email\":\"admin@admin.es\", \"image\":\"adminimage.jpg\", \"birthdate\": \"1993/12/25\", \"location\": \"bcn\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://aarco-final-project-202207.herokuapp.com/games/users/register",
+          "protocol": "https",
+          "host": ["aarco-final-project-202207", "herokuapp", "com"],
+          "path": ["games", "users", "register"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "herokuUrl",
+      "value": "https://aarco-final-project-202207.herokuapp.com"
+    }
+  ]
+}
