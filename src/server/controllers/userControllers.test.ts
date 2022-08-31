@@ -7,16 +7,21 @@ describe("Given a userController controller", () => {
   describe("When it invoked with registerUser method", () => {
     const newUser: UserRegister = {
       birthdate: new Date(),
-      email: "",
-      image: "",
-      location: "",
-      name: "",
-      password: "",
-      username: "",
+      email: "adrian@gmail.com",
+      image: "image.jpg",
+      location: "barcelona",
+      name: "adrian",
+      password: "12345",
+      username: "12345",
     };
+    const userJson = JSON.stringify(newUser);
+
     const status = 200;
 
-    const req: Partial<Request> = { body: newUser };
+    const req: Partial<Request> = {
+      body: { user: userJson },
+      file: { fileName: "adrianImage" } as any,
+    };
 
     test("Then it should call the status method with a 200", async () => {
       User.create = jest.fn().mockResolvedValue(newUser);
