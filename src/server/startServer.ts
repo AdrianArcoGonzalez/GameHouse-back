@@ -12,7 +12,7 @@ export const startServer = (port: number) =>
   new Promise((resolve, reject) => {
     const server = app.listen(port, () => {
       debug(
-        chalk.greenBright(`Server listening on port http://localhost${port}`)
+        chalk.greenBright(`Server listening on port http://localhost:${port}`)
       );
       resolve(true);
     });

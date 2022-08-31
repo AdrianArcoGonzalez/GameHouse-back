@@ -9,9 +9,13 @@ const registerUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const user: UserRegister = req.body;
-  user.password = await hashCreator(user.password, 10);
+  const json = req.body.user;
 
+  const user: UserRegister = JSON.parse(json);
+
+  user.password = await hashCreator(user.password, 10);
+  // eslint-disable-next-line prefer-destructuring
+  user.image = `uploads\\${req.file.filename}`;
   try {
     const newUser = await User.create(user);
 
