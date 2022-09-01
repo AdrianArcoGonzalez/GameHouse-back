@@ -38,18 +38,6 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.set("toJSON", {
-  transform: (doc, ret) => {
-    const newDocument = { ...ret };
-    delete newDocument.password;
-    // eslint-disable-next-line no-underscore-dangle
-    delete newDocument.__v;
-    // eslint-disable-next-line no-underscore-dangle
-    delete newDocument._id;
-    return newDocument;
-  },
-});
-
 const User = model("User", userSchema, "users");
 
 export default User;
