@@ -32,9 +32,9 @@ const user = userJson;
 
 describe("Given a register endpoint", () => {
   describe("When it receive a request with method post and the correct user data", () => {
-    test("Then it should response with status 201 and a message", async () => {
+    test("Then it should response with status 201", async () => {
       const expectedStatus = 201;
-      const response = await request(app)
+      await request(app)
         .post("/games/users/register")
         .type("multipart/form-data")
         .field("user", user)
@@ -42,8 +42,15 @@ describe("Given a register endpoint", () => {
           filename: "avatar.jpg",
         })
         .expect(expectedStatus);
+    });
 
-      expect(response.statusCode).toEqual(expectedStatus);
+    test("And status 401 for a wrong user data", async () => {
+      const expectedStatus = 401;
+      const user2 = {};
+      await request(app)
+        .post("/games/users/register")
+        .send(user2)
+        .expect(expectedStatus);
     });
   });
 });
