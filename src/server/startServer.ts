@@ -1,14 +1,12 @@
 import "../loadEnvironment";
-import express from "express";
+
 import Debug from "debug";
 import chalk from "chalk";
+import app from ".";
 
 const debug = Debug("GAMES:startServer");
 
-export const app = express();
-app.disable("x-powered-by");
-
-export const startServer = (port: number) =>
+const startServer = (port: number) =>
   new Promise((resolve, reject) => {
     const server = app.listen(port, () => {
       debug(
@@ -16,9 +14,10 @@ export const startServer = (port: number) =>
       );
       resolve(true);
     });
-
     server.on("error", (error) => {
       debug(chalk.redBright("Error server error:", error.message));
       reject(error);
     });
   });
+
+export default startServer;

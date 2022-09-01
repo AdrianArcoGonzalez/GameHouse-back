@@ -16,7 +16,7 @@ describe("Given a userController controller", () => {
     };
     const userJson = JSON.stringify(newUser);
 
-    const status = 200;
+    const status = 201;
 
     const req: Partial<Request> = {
       body: { user: userJson },

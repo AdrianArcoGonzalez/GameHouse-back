@@ -21,7 +21,7 @@ const registerUser = async (
     user.image = `uploads\\${req.file.filename}`;
     await User.create(user);
 
-    res.status(200).json({ message: "User Created" });
+    res.status(201).json({ message: "User Created" });
   } catch (error) {
     const errorCustom = customError(
       401,
