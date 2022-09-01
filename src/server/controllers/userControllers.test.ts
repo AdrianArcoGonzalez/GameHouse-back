@@ -37,6 +37,7 @@ describe("Given a userController controller", () => {
     });
 
     test("And it should call the method json with the newUser created", async () => {
+      const message = { message: "User Created" };
       User.create = jest.fn().mockResolvedValue(newUser);
 
       const next: NextFunction = jest.fn();
@@ -47,7 +48,7 @@ describe("Given a userController controller", () => {
 
       await registerUser(req as Request, res as Response, next as NextFunction);
 
-      expect(res.json).toHaveBeenCalledWith({ user: newUser });
+      expect(res.json).toHaveBeenCalledWith(message);
     });
 
     test("And if it reject the create method it should call the next function with the a custom error", async () => {

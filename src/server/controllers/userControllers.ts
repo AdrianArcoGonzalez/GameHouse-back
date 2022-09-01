@@ -17,9 +17,9 @@ const registerUser = async (
   // eslint-disable-next-line prefer-destructuring
   user.image = `uploads\\${req.file.filename}`;
   try {
-    const newUser = await User.create(user);
+    await User.create(user);
 
-    res.status(200).json({ user: newUser });
+    res.status(200).json({ message: "User Created" });
   } catch (error) {
     const errorCustom = customError(
       401,
