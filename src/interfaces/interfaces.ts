@@ -15,3 +15,26 @@ export interface UserRegister {
   games?: string[];
   reviews?: string[];
 }
+
+export interface LoginData {
+  id: string;
+  username: string;
+  password: string;
+}
+
+export interface UserData {
+  username: string;
+  password: string;
+  email: string;
+  image: string;
+  name: string;
+  birthdate: Date;
+  location: string;
+  games?: string[];
+  reviews?: string[];
+  id: string;
+}
+export interface JwtPayload {
+  id: string;
+  userName: string;
+}
