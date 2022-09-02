@@ -74,10 +74,13 @@ export const loginUser = async (
   }
 
   try {
-    const isPasswordValid = hashComparer(user.password, findUser[0].password);
+    const isPasswordValid = await hashComparer(
+      user.password,
+      findUser[0].password
+    );
+
     if (!isPasswordValid) {
-      next();
-      return;
+      throw new Error();
     }
   } catch (error) {
     const userError = customError(
