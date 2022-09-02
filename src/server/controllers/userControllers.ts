@@ -2,9 +2,18 @@ import "../../loadEnvironment";
 import { Request, Response, NextFunction } from "express";
 import { validate } from "express-validation";
 import User from "../../database/models/User";
-import { UserRegister } from "../../interfaces/interfaces";
+import {
+  JwtPayload,
+  LoginData,
+  UserData,
+  UserRegister,
+} from "../../interfaces/interfaces";
 import registerSchema from "../../schemas/registerSchema";
-import hashCreator from "../../utils/authentication";
+import {
+  hashCreator,
+  hashComparer,
+  createToken,
+} from "../../utils/authentication";
 import customError from "../../utils/customError";
 
 const registerUser = async (
@@ -33,4 +42,60 @@ const registerUser = async (
   }
 };
 
+export const loginUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = req.body as LoginData;
+  let findUser: UserData[];
+  try {
+    findUser = await User.find({ name: user.username });
+
+    if (findUser.length === 0) {
+      const userError = customError(
+        403,
+        "User not found",
+        "User or password not valid"
+      );
+      next(userError);
+      return;
+    }
+  } catch (error) {
+    const newError = customError(
+      403,
+      `name: ${(error as Error).name} message: ${error.message}`,
+      "user or password not valid"
+    );
+
+    next(newError);
+
+    return;
+  }
+
+  try {
+    const isPasswordValid = hashComparer(user.password, findUser[0].password);
+    if (!isPasswordValid) {
+      next();
+      return;
+    }
+  } catch (error) {
+    const userError = customError(
+      403,
+      "User not found",
+      "User or password not valid"
+    );
+    next(userError);
+    return;
+  }
+
+  const payload: JwtPayload = {
+    id: findUser[0].id,
+    userName: findUser[0].username,
+  };
+
+  const responseData = { user: { token: createToken(payload) } };
+
+  res.status(200).json(responseData);
+};
 export default registerUser;
