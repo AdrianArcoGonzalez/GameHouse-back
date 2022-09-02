@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import registerUser from "../controllers/userControllers";
+import { registerUser } from "../controllers/userControllers";
 
 const usersRouter = express.Router();
 const upload = multer({ dest: "uploads", limits: { fileSize: 3000000 } });

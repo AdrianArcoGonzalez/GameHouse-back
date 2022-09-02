@@ -16,7 +16,7 @@ import {
 } from "../../utils/authentication";
 import customError from "../../utils/customError";
 
-const registerUser = async (
+export const registerUser = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -98,4 +98,3 @@ export const loginUser = async (
 
   res.status(200).json(responseData);
 };
-export default registerUser;

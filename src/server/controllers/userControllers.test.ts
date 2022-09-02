@@ -1,7 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../../database/models/User";
 import { UserRegister } from "../../interfaces/interfaces";
-import registerUser from "./userControllers";
+import { loginUser, registerUser } from "./userControllers";
+
+const mockHashCompareValue: any = true;
+
+jest.mock("../../utils/authentication", () => ({
+  ...jest.requireActual("../../utils/authentication"),
+  hashCreate: () => jest.fn().mockReturnValue("#"),
+  createToken: () => "#",
+  hashCompare: () => mockHashCompareValue,
+}));
 
 describe("Given a userController controller", () => {
   describe("When it invoked with registerUser method", () => {
@@ -64,6 +73,27 @@ describe("Given a userController controller", () => {
       await registerUser(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe("When it's invoked with a loginUser method and the correct data", () => {
+    const fakeUser = {
+      username: "adrian",
+      password: "12356",
+    };
+
+    test("Then it should call the method status with a 200", async () => {
+      User.find = jest.fn().mockReturnValue([fakeUser]);
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+      const next: NextFunction = jest.fn();
+      const req = { body: fakeUser } as Partial<Request>;
+
+      await loginUser(req as Request, res as Response, next as NextFunction);
+
+      expect(res.status).toHaveBeenCalledWith(200);
     });
   });
 });
