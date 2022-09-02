@@ -24,12 +24,13 @@ beforeAll(async () => {
   await connectDatabase(mongoUrl);
 });
 
+afterEach(async () => {
+  await User.deleteMany(userBaseData);
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
   await mongoServer.stop();
-});
-afterEach(() => {
-  User.deleteMany({});
 });
 
 const newUser = {
@@ -69,10 +70,20 @@ describe("Given a register endpoint", () => {
   });
   describe("When it receive a request with post on login with correct data", () => {
     test("Then it should response with status 200 and a token", async () => {
-      await User.create(userBaseData);
-
       const expectedStatus = 200;
       const user2 = { username: "adrian", password: "12345" };
+      await User.create(userBaseData);
+      await request(app)
+        .post("/games/users/login")
+        .send(user2)
+        .expect(expectedStatus);
+    });
+
+    test("And if it get a wrong password should response with 403 as status", async () => {
+      await User.create(userBaseData);
+
+      const expectedStatus = 403;
+      const user2 = { username: "adrian", password: "1238888" };
       await request(app)
         .post("/games/users/login")
         .send(user2)
