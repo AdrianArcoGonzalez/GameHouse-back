@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../../database/models/User";
 import { JwtPayload, UserRegister } from "../../interfaces/interfaces";
-import { createToken, hashComparer } from "../../utils/authentication";
+import { createToken } from "../../utils/authentication";
 import customError from "../../utils/customError";
 import { loginUser, registerUser } from "./userControllers";
 
