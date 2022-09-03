@@ -103,7 +103,7 @@ describe("Given a userController controller", () => {
 
       const payLoad: JwtPayload = {
         id: "123456",
-        userName: "adrian",
+        username: "adrian",
       };
 
       const responseData = {

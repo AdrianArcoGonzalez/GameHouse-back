@@ -94,7 +94,7 @@ export const loginUser = async (
 
   const payload: JwtPayload = {
     id: findUser[0].id,
-    userName: findUser[0].username,
+    username: findUser[0].username,
   };
 
   const responseData = { user: { token: createToken(payload) } };

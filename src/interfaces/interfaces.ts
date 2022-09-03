@@ -36,5 +36,5 @@ export interface UserData {
 }
 export interface JwtPayload {
   id: string;
-  userName: string;
+  username: string;
 }
