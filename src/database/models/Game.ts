@@ -24,18 +24,22 @@ const gameSchema = new Schema({
   },
   owner: {
     type: String,
+    required: true,
   },
   likes: {
     type: Number,
+    required: false,
   },
   dislikes: {
     type: Number,
+    required: false,
   },
   reviews: {
     type: [String],
+    required: false,
   },
 });
 
-const Games = model("Games", gameSchema, "games");
+const Game = model("Games", gameSchema, "games");
 
-export default Games;
+export default Game;
