@@ -6,6 +6,7 @@ import chalk from "chalk";
 import Debug from "debug";
 import generalError from "./middlewares/error";
 import usersRouter from "./routers/usersRouter";
+import gamesRouter from "./routers/gamesRouter";
 
 const debug = Debug("GAMES:IndexServer");
 
@@ -21,6 +22,7 @@ app.use((req, _res, next) => {
 });
 
 app.use("/games/users", usersRouter);
+app.use("/games/games", gamesRouter);
 app.use("/", generalError);
 
 export default app;

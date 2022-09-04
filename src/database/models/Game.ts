@@ -23,19 +23,23 @@ const gameSchema = new Schema({
     required: true,
   },
   owner: {
-    type: [Schema.Types.ObjectId],
+    type: String,
+    required: true,
   },
   likes: {
-    type: [Schema.Types.ObjectId],
+    type: Number,
+    required: false,
   },
   dislikes: {
-    type: [Schema.Types.ObjectId],
+    type: Number,
+    required: false,
   },
   reviews: {
-    type: [Schema.Types.ObjectId],
+    type: [String],
+    required: false,
   },
 });
 
-const Games = model("Games", gameSchema, "games");
+const Game = model("Games", gameSchema, "games");
 
-export default Games;
+export default Game;
