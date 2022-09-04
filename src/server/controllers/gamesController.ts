@@ -6,11 +6,7 @@ import Games from "../../database/models/Game";
 
 const debug = Debug("GAMES:Controllers");
 
-export const getAllGames = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getAllGames = async (req: Request, res: Response, next: NextFunction) => {
   debug(chalk.yellow("Received a getAllGames req"));
   try {
     const AllGames = await Games.find();
