@@ -4,7 +4,7 @@ import Debug from "debug";
 import customError from "../../utils/customError";
 import Games from "../../database/models/Game";
 
-const debug = Debug("ROBOTS:Controllers");
+const debug = Debug("GAMES:Controllers");
 
 export const getAllGames = async (
   req: Request,
