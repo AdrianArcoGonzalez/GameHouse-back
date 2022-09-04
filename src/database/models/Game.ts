@@ -23,16 +23,16 @@ const gameSchema = new Schema({
     required: true,
   },
   owner: {
-    type: [Schema.Types.ObjectId],
+    type: String,
   },
   likes: {
-    type: [Schema.Types.ObjectId],
+    type: Number,
   },
   dislikes: {
-    type: [Schema.Types.ObjectId],
+    type: Number,
   },
   reviews: {
-    type: [Schema.Types.ObjectId],
+    type: [String],
   },
 });
 

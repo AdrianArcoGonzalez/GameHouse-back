@@ -38,3 +38,15 @@ export interface JwtPayload {
   id: string;
   username: string;
 }
+
+export interface Game {
+  title: string;
+  category: string;
+  company: string;
+  image: string;
+  sinopsis: string;
+  owner: string;
+  likes: number;
+  dislikes: number;
+  reviews?: string[];
+}

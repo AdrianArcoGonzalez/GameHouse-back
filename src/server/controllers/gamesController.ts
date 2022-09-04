@@ -7,13 +7,11 @@ import Games from "../../database/models/Game";
 const debug = Debug("GAMES:Controllers");
 
 const getAllGames = async (req: Request, res: Response, next: NextFunction) => {
-  debug(chalk.yellow("Received a getAllGames req"));
+  let games;
   try {
-    const AllGames = await Games.find();
+    games = await Games.find();
     debug(chalk.yellow("Sending a response from getAllGames"));
-
-    res.status(200).json({ AllGames });
-  } catch {
+  } catch (error) {
     const errorGetAll = customError(
       500,
       "Conection to database is down",
@@ -21,7 +19,10 @@ const getAllGames = async (req: Request, res: Response, next: NextFunction) => {
     );
 
     next(errorGetAll);
+    return;
   }
+
+  res.status(200).json({ games });
 };
 
 export default getAllGames;
