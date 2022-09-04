@@ -23,8 +23,8 @@ afterAll(async () => {
 });
 
 describe("Given a register endpoint", () => {
-  describe("When it receive a request with method post on register and the correct user data", () => {
-    test("Then it should response with status 201", async () => {
+  describe("When it receive a request with method get", () => {
+    test("Then it should response with status 200", async () => {
       const expectedStatus = 200;
 
       await request(app).get("/games/games/").expect(expectedStatus);
