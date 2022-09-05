@@ -13,6 +13,23 @@ beforeAll(async () => {
   await connectDatabase(mongoUrl);
 });
 
+const fakeGame = {
+  title: "Assassins Creed 2",
+  company: "Ubisoft",
+  category: "adventure",
+  dislikes: 150,
+  likes: 180,
+  image: "image",
+  owner: "Admin",
+  sinopsis: "sinposis Lorem Lorem Lorem Lorem Lorem Lorem",
+  reviews: ["review"],
+};
+
+let gameCreated: any;
+beforeEach(async () => {
+  gameCreated = await Game.create(fakeGame);
+});
+
 afterEach(async () => {
   await Game.deleteMany({});
 });
@@ -22,12 +39,19 @@ afterAll(async () => {
   await mongoServer.stop();
 });
 
-describe("Given a register endpoint", () => {
-  describe("When it receive a request with method get", () => {
+describe("Given a games endpoint", () => {
+  const expectedStatus = 200;
+  describe("When it receive a request to /games/games with method get", () => {
     test("Then it should response with status 200", async () => {
-      const expectedStatus = 200;
-
       await request(app).get("/games/games/").expect(expectedStatus);
+    });
+  });
+
+  describe("When it receive a request to /games/games/12345", () => {
+    test("Then it should response with status 200", async () => {
+      await request(app)
+        .get(`/games/games/${gameCreated.id}`)
+        .expect(expectedStatus);
     });
   });
 });
