@@ -42,5 +42,5 @@ export const getById = async (
   } catch {
     next(customError(404, "Element not found", "Cant response this request"));
   }
-  res.status(200).json(requestedGame);
+  res.status(200).json({ requestedGame });
 };
