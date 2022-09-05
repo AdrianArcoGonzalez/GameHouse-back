@@ -6,7 +6,11 @@ import Game from "../../database/models/Game";
 
 const debug = Debug("GAMES:Controllers");
 
-const getAllGames = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllGames = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   let games;
   try {
     games = await Game.find();
@@ -25,4 +29,18 @@ const getAllGames = async (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({ games });
 };
 
-export default getAllGames;
+export const getById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  debug(chalk.yellow("Received a getById req"));
+  let requestedGame;
+  try {
+    const idGame = req.params.id;
+    requestedGame = await Game.find({ _id: idGame });
+  } catch {
+    next(customError(404, "Element not found", "Cant response this request"));
+  }
+  res.status(200).json(requestedGame);
+};

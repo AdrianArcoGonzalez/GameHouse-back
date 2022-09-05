@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Games from "../../database/models/Game";
 import { Game } from "../../interfaces/interfaces";
-import getAllGames from "./gamesController";
+import { getAllGames } from "./gamesController";
 
 describe("Given gamessController controller", () => {
   beforeEach(() => jest.restoreAllMocks());
