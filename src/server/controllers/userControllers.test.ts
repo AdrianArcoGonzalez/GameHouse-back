@@ -5,7 +5,7 @@ import { createToken } from "../../utils/authentication";
 import customError from "../../utils/customError";
 import { loginUser, registerUser } from "./userControllers";
 
-let mockHashCompareValue: any = true;
+let mockHashCompareValue: boolean | Error = true;
 jest.mock("../../utils/authentication", () => ({
   ...jest.requireActual("../../utils/authentication"),
   hashCreate: () => jest.fn().mockReturnValue(""),
