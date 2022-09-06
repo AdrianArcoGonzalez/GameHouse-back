@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import app from "../index";
 import connectDatabase from "../../database";
 import Game from "../../database/models/Game";
+import { Game as IGame } from "../../interfaces/interfaces";
 
 let mongoServer: MongoMemoryServer;
 beforeAll(async () => {
@@ -25,7 +26,7 @@ const fakeGame = {
   reviews: ["review"],
 };
 
-let gameCreated: any;
+let gameCreated: IGame;
 beforeEach(async () => {
   gameCreated = await Game.create(fakeGame);
 });

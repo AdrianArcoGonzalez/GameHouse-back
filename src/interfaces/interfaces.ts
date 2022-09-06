@@ -46,7 +46,8 @@ export interface Game {
   image: string;
   sinopsis: string;
   owner: string;
-  likes: number;
-  dislikes: number;
+  likes?: number;
+  dislikes?: number;
   reviews?: string[];
+  id?: string;
 }
