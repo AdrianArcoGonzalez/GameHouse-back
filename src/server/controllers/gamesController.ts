@@ -35,12 +35,13 @@ export const getById = async (
   next: NextFunction
 ) => {
   debug(chalk.yellow("Received a getById req"));
-  let requestedGame;
+
   try {
     const idGame = req.params.id;
-    requestedGame = await Game.find({ _id: idGame });
+    const game = await Game.findById(idGame);
+
+    res.status(200).json({ game });
   } catch {
     next(customError(404, "Element not found", "Cant response this request"));
   }
-  res.status(200).json({ requestedGame });
 };

@@ -68,7 +68,7 @@ describe("Given gamessController controller", () => {
 
   describe("When it's invoked with his method getById", () => {
     test("Then it should response with status 200 and the game on json if it the data is ok", async () => {
-      const requestedGame = {
+      const game = {
         title: "Assassins Creed 2",
         company: "Ubisoft",
         category: "",
@@ -83,14 +83,14 @@ describe("Given gamessController controller", () => {
       const req: Partial<Request> = { params: { id: "123123123123" } };
       const res: Partial<Response> = {
         status: jest.fn().mockReturnThis(),
-        json: jest.fn().mockResolvedValue({ requestedGame }),
+        json: jest.fn().mockResolvedValue({ game }),
       };
       const next = jest.fn();
-      Games.find = jest.fn().mockResolvedValue(requestedGame);
+      Games.findById = jest.fn().mockResolvedValue(game);
       await getById(req as Request, res as Response, next as NextFunction);
 
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({ requestedGame });
+      expect(res.json).toHaveBeenCalledWith({ game });
     });
 
     test("And it should call the next function with an error if cannot get the game", async () => {
@@ -101,7 +101,7 @@ describe("Given gamessController controller", () => {
         json: jest.fn().mockResolvedValue([]),
       };
       const next = jest.fn();
-      Games.find = jest.fn().mockRejectedValue(error);
+      Games.findById = jest.fn().mockRejectedValue(error);
       await getById(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
