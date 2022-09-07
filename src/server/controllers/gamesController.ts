@@ -67,3 +67,20 @@ export const deleteOne = async (
     );
   }
 };
+
+export const getOwnerGames = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { owner } = req.params;
+    const games = await Game.find({ owner });
+
+    res.status(200).json({ games });
+  } catch (error) {
+    next(
+      customError(404, "Cannot find any game from that owner", "No Games Found")
+    );
+  }
+};
