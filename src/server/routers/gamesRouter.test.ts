@@ -50,15 +50,23 @@ describe("Given a games endpoint", () => {
 
   describe("When it receive a request to /games/games/12345", () => {
     test("Then it should response with status 200", async () => {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGQzNWI4NGQzMmExOGViOTZhMjljYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NjI1NjA4NDR9.4nEXRVpzcCuTccObQEByx9X6L0MOS372Fwb_U6K2_aY";
       await request(app)
         .get(`/games/games/${gameCreated.id}`)
+        .set("Authorization", `Bearer ${token}`)
         .expect(expectedStatus);
     });
   });
 
   describe("When it receive a request to /games/games with an id on the body", () => {
     test("Then it should response with status 200", async () => {
-      await request(app).delete(`/games/games/`).expect(expectedStatus);
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGQzNWI4NGQzMmExOGViOTZhMjljYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NjI1NjA4NDR9.4nEXRVpzcCuTccObQEByx9X6L0MOS372Fwb_U6K2_aY";
+      await request(app)
+        .delete(`/games/games/`)
+        .set("Authorization", `Bearer ${token}`)
+        .expect(expectedStatus);
     });
   });
 });

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { validate } from "express-validation";
 import User from "../../database/models/User";
 import {
-  JwtPayload,
+  IJwtPayload,
   LoginData,
   UserData,
   UserRegister,
@@ -92,7 +92,7 @@ export const loginUser = async (
     return;
   }
 
-  const payload: JwtPayload = {
+  const payload: IJwtPayload = {
     id: findUser[0].id,
     username: findUser[0].username,
   };

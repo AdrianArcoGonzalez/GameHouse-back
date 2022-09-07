@@ -1,3 +1,6 @@
+import { Request } from "express";
+import { JwtPayload } from "jsonwebtoken";
+
 export interface CustomError extends Error {
   statusCode: number;
   publicmessage?: string;
@@ -34,7 +37,7 @@ export interface UserData {
   reviews?: string[];
   id: string;
 }
-export interface JwtPayload {
+export interface IJwtPayload {
   id: string;
   username: string;
 }
@@ -50,4 +53,8 @@ export interface Game {
   dislikes?: number;
   reviews?: string[];
   id?: string;
+}
+
+export interface CustomRequest extends Request {
+  payload: JwtPayload;
 }
