@@ -45,3 +45,26 @@ export const getById = async (
     next(customError(404, "Element not found", "Cant response this request"));
   }
 };
+
+export const deleteOne = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    debug(chalk.yellow("received delete request"));
+    const idGame = req.body.id;
+
+    const game = await Game.findByIdAndDelete(idGame);
+
+    res.status(200).json({ game });
+  } catch (error) {
+    next(
+      customError(
+        404,
+        "Cannot find and delete this element",
+        "Can't response this request"
+      )
+    );
+  }
+};
