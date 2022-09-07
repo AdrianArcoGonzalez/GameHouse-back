@@ -6,8 +6,8 @@ import authentication from "./auth";
 
 let mockTokenVerify: jest.Mock<void> | string = jest.fn();
 
-jest.mock("../utils/auth", () => ({
-  ...jest.requireActual("../utils/auth"),
+jest.mock("../../utils/authentication", () => ({
+  ...jest.requireActual("../../utils/authentication"),
   verifyToken: () => mockTokenVerify,
 }));
 
