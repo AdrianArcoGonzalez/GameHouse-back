@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../../database/models/User";
-import { JwtPayload, UserRegister } from "../../interfaces/interfaces";
+import { IJwtPayload, UserRegister } from "../../interfaces/interfaces";
 import { createToken } from "../../utils/authentication";
 import customError from "../../utils/customError";
 import { loginUser, registerUser } from "./userControllers";
@@ -101,7 +101,7 @@ describe("Given a userController controller", () => {
     test("And it should call the method json", async () => {
       await loginUser(req as Request, res as Response, next as NextFunction);
 
-      const payLoad: JwtPayload = {
+      const payLoad: IJwtPayload = {
         id: "123456",
         username: "adrian",
       };
