@@ -52,12 +52,11 @@ export const deleteOne = async (
   next: NextFunction
 ) => {
   try {
-    debug(chalk.yellow("received delete request"));
     const idGame = req.body.id;
 
-    const game = await Game.findByIdAndDelete(idGame);
+    await Game.findByIdAndDelete(idGame);
 
-    res.status(200).json({ game });
+    res.status(200).json({ idGame });
   } catch (error) {
     next(
       customError(
