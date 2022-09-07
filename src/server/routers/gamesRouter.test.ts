@@ -55,4 +55,10 @@ describe("Given a games endpoint", () => {
         .expect(expectedStatus);
     });
   });
+
+  describe("When it receive a request to /games/games with an id on the body", () => {
+    test("Then it should response with status 200", async () => {
+      await request(app).delete(`/games/games/`).expect(expectedStatus);
+    });
+  });
 });

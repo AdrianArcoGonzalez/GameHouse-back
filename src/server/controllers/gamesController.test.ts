@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import Games from "../../database/models/Game";
-import { Game } from "../../interfaces/interfaces";
-import { getAllGames, getById } from "./gamesController";
+import Game from "../../database/models/Game";
+import { deleteOne, getAllGames, getById } from "./gamesController";
+import { Game as IGame } from "../../interfaces/interfaces";
 
 describe("Given gamessController controller", () => {
   beforeEach(() => jest.restoreAllMocks());
@@ -14,13 +14,13 @@ describe("Given gamessController controller", () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
-      Games.find = jest.fn().mockResolvedValue([]);
+      Game.find = jest.fn().mockResolvedValue([]);
       await getAllGames(req as Request, res as Response, next as NextFunction);
 
       expect(res.status).toHaveBeenCalledWith(status);
     });
     test("Then it should call the json method with the games", async () => {
-      const games: Game[] = [
+      const games: IGame[] = [
         {
           title: "Assassins Creed 2",
           company: "Ubisoft",
@@ -48,7 +48,7 @@ describe("Given gamessController controller", () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockResolvedValue(games),
       };
-      Games.find = jest.fn().mockResolvedValue(games);
+      Game.find = jest.fn().mockResolvedValue(games);
       await getAllGames(req as Request, res as Response, next as NextFunction);
 
       expect(res.json).toHaveBeenCalledWith({ games });
@@ -59,7 +59,7 @@ describe("Given gamessController controller", () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockResolvedValue([]),
       };
-      Games.find = jest.fn().mockRejectedValue(error);
+      Game.find = jest.fn().mockRejectedValue(error);
       await getAllGames(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
@@ -86,7 +86,7 @@ describe("Given gamessController controller", () => {
         json: jest.fn().mockResolvedValue({ game }),
       };
       const next = jest.fn();
-      Games.findById = jest.fn().mockResolvedValue(game);
+      Game.findById = jest.fn().mockResolvedValue(game);
       await getById(req as Request, res as Response, next as NextFunction);
 
       expect(res.status).toHaveBeenCalledWith(200);
@@ -101,8 +101,41 @@ describe("Given gamessController controller", () => {
         json: jest.fn().mockResolvedValue([]),
       };
       const next = jest.fn();
-      Games.findById = jest.fn().mockRejectedValue(error);
+      Game.findById = jest.fn().mockRejectedValue(error);
+
       await getById(req as Request, res as Response, next as NextFunction);
+
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe("When it's invoked with the method deleteOne", () => {
+    test("And if the data is ok it should call the status 200 and json with the id deleted", async () => {
+      const req: Partial<Request> = { body: { id: "123123123123" } };
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({ idGame: "123123123123" }),
+      };
+      const next = jest.fn();
+      Game.findByIdAndDelete = jest.fn();
+
+      await deleteOne(req as Request, res as Response, next as NextFunction);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ idGame: "123123123123" });
+    });
+
+    test("And if the data is wrong it should call the next function with an error", async () => {
+      const error = new Error();
+      const req: Partial<Request> = {};
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue([]),
+      };
+      const next = jest.fn();
+      Game.findByIdAndDelete = jest.fn().mockResolvedValue(error);
+
+      await deleteOne(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
     });
