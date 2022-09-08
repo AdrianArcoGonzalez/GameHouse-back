@@ -1,8 +1,10 @@
 import chalk from "chalk";
 import { NextFunction, Request, Response } from "express";
 import Debug from "debug";
+import { validate } from "express-validation";
 import customError from "../../utils/customError";
 import Game from "../../database/models/Game";
+import gameSchema from "../../schemas/gameSchema";
 
 const debug = Debug("GAMES:Controllers");
 
@@ -82,5 +84,26 @@ export const getOwnerGames = async (
     next(
       customError(404, "Cannot find any game from that owner", "No Games Found")
     );
+  }
+};
+
+export const createGame = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const game = req.body;
+  try {
+    validate(gameSchema, {}, { abortEarly: false });
+    const gameCreated = await Game.create(game);
+    res.status(201).json({ game: gameCreated });
+  } catch (error) {
+    const errorCreate = customError(
+      400,
+      "error creating game",
+      "Cannot create the game"
+    );
+
+    next(errorCreate);
   }
 };
