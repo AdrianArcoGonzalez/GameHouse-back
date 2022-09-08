@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Game from "../../database/models/Game";
 import {
+  createGame,
   deleteOne,
   getAllGames,
   getById,
@@ -11,12 +12,12 @@ import { Game as IGame } from "../../interfaces/interfaces";
 const game = {
   title: "Assassins Creed 2",
   company: "Ubisoft",
-  category: "",
+  category: "Adventure",
   dislikes: 0,
   likes: 0,
-  image: "",
-  owner: "",
-  sinopsis: "",
+  image: "image.webp",
+  owner: "admin",
+  sinopsis: "Lorem Lorem Lorem",
   reviews: [""],
   id: "123123123123",
 };
@@ -185,6 +186,37 @@ describe("Given gamessController controller", () => {
         res as Response,
         next as NextFunction
       );
+
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe("When its invoked with method createGame", () => {
+    test("then it should call the status method with a 200 and json with the game created", async () => {
+      const req = {} as Partial<Request>;
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({ game }),
+      };
+      const next = jest.fn();
+      Game.create = jest.fn().mockResolvedValue(game);
+
+      await createGame(req as Request, res as Response, next as NextFunction);
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ game });
+    });
+    test("And if it throw an error creating it should next with an error", async () => {
+      const error = new Error();
+      const req = {} as Partial<Request>;
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue([]),
+      };
+      const next = jest.fn();
+      Game.create = jest.fn().mockRejectedValue(error);
+
+      await createGame(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
     });

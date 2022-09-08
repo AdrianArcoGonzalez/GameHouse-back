@@ -14,7 +14,13 @@ const upload = multer({ dest: "uploads" });
 const gamesRouter = express.Router();
 
 gamesRouter.get("/", getAllGames);
-gamesRouter.post("/", upload.single("image"), parserJson, createGame);
+gamesRouter.post(
+  "/",
+  upload.single("image"),
+  authentication,
+  parserJson,
+  createGame
+);
 gamesRouter.get("/my-collection/:owner", authentication, getOwnerGames);
 gamesRouter.get("/:id", authentication, getById);
 gamesRouter.delete("/", authentication, deleteOne);
