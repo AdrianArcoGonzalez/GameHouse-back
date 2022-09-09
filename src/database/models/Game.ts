@@ -38,6 +38,9 @@ const gameSchema = new Schema({
     type: [String],
     required: false,
   },
+  imageBackUp: {
+    type: String,
+  },
 });
 
 const Game = model("Games", gameSchema, "games");
