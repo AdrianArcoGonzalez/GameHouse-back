@@ -94,6 +94,7 @@ export const createGame = async (
 ) => {
   const game = req.body;
   try {
+    debugger;
     validate(gameSchema, {}, { abortEarly: false });
     const gameCreated = await Game.create(game);
     res.status(201).json({ game: gameCreated });

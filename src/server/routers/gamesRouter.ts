@@ -9,6 +9,7 @@ import {
 } from "../controllers/gamesController";
 import authentication from "../middlewares/auth";
 import parserJson from "../middlewares/parserJson";
+import supaBaseUpload from "../middlewares/supaBase";
 
 const upload = multer({ dest: "uploads" });
 const gamesRouter = express.Router();
@@ -19,6 +20,7 @@ gamesRouter.post(
   upload.single("image"),
   authentication,
   parserJson,
+  supaBaseUpload,
   createGame
 );
 gamesRouter.get("/my-collection/:owner", authentication, getOwnerGames);
