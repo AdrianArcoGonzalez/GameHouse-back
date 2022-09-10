@@ -3,6 +3,7 @@ import Game from "../../database/models/Game";
 import {
   createGame,
   deleteOne,
+  editGame,
   getAllGames,
   getById,
   getOwnerGames,
@@ -217,6 +218,43 @@ describe("Given gamessController controller", () => {
       Game.create = jest.fn().mockRejectedValue(error);
 
       await createGame(req as Request, res as Response, next as NextFunction);
+
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe("When it's invoked the method editGame", () => {
+    test("Then it should call the status method with 200", async () => {
+      const req = {
+        body: game,
+        params: game.id as unknown,
+      } as Partial<Request>;
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({ game }),
+      };
+      const next = jest.fn();
+      Game.findByIdAndUpdate = jest.fn().mockResolvedValue(game);
+
+      await editGame(req as Request, res as Response, next as NextFunction);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ game });
+    });
+
+    test("Then it should next with an error if it cannot complete the update", async () => {
+      const error = new Error();
+      const req = {
+        params: game.id as unknown,
+      } as Partial<Request>;
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue([]),
+      };
+      const next = jest.fn();
+      Game.findByIdAndUpdate = jest.fn().mockRejectedValue(error);
+
+      await editGame(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
     });
