@@ -5,6 +5,7 @@ import { validate } from "express-validation";
 import customError from "../../utils/customError";
 import Game from "../../database/models/Game";
 import gameSchema from "../../schemas/gameSchema";
+import { Game as IGame } from "../../interfaces/interfaces";
 
 const debug = Debug("GAMES:Controllers");
 
@@ -105,5 +106,38 @@ export const createGame = async (
     );
 
     next(errorCreate);
+  }
+};
+
+export const editGame = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const game: IGame = req.body;
+  const { id } = req.params;
+  try {
+    validate(gameSchema, {}, { abortEarly: false });
+
+    const gameEdited: IGame = {
+      category: game.category,
+      company: game.company,
+      image: game.image,
+      imageBackUp: game.imageBackUp,
+      likes: game.likes,
+      dislikes: game.dislikes,
+      reviews: game.reviews,
+      sinopsis: game.sinopsis,
+      title: game.title,
+      owner: game.owner,
+    };
+
+    const updatedGame = await Game.findByIdAndUpdate({ _id: id }, gameEdited, {
+      new: true,
+    });
+
+    res.status(200).json({ game: updatedGame });
+  } catch (error) {
+    next(customError(400, "Cannot edit game", "Cannot edit this game"));
   }
 };
