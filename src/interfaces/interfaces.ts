@@ -53,6 +53,7 @@ export interface Game {
   dislikes?: number;
   reviews?: string[];
   id?: string;
+  imageBackUp?: string;
 }
 
 export interface CustomRequest extends Request {

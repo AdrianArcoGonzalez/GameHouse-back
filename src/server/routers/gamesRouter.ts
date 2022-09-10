@@ -1,8 +1,10 @@
 import express from "express";
+
 import multer from "multer";
 import {
   createGame,
   deleteOne,
+  editGame,
   getAllGames,
   getById,
   getOwnerGames,
@@ -22,6 +24,14 @@ gamesRouter.post(
   parserJson,
   supaBaseUpload,
   createGame
+);
+gamesRouter.put(
+  "/:id",
+  upload.single("image"),
+  authentication,
+  parserJson,
+  supaBaseUpload,
+  editGame
 );
 gamesRouter.get("/my-collection/:owner", authentication, getOwnerGames);
 gamesRouter.get("/:id", authentication, getById);
