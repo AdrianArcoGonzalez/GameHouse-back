@@ -13,7 +13,7 @@ import authentication from "../middlewares/auth";
 import parserJson from "../middlewares/parserJson";
 import supaBaseUpload from "../middlewares/supaBase";
 
-const upload = multer({ dest: "uploads" });
+const upload = multer({ dest: "uploads", limits: { fileSize: 3000000 } });
 const gamesRouter = express.Router();
 
 gamesRouter.get("/", getAllGames);
