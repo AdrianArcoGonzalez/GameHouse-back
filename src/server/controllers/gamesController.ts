@@ -141,3 +141,17 @@ export const editGame = async (
     next(customError(400, "Cannot edit game", "Cannot edit this game"));
   }
 };
+
+export const getByCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { category } = req.params;
+  try {
+    const games = await Game.find({ category });
+    res.status(200).json({ games });
+  } catch (error) {
+    next(customError(404, "Cannot get games", "No games found"));
+  }
+};

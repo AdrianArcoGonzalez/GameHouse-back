@@ -6,6 +6,7 @@ import {
   deleteOne,
   editGame,
   getAllGames,
+  getByCategory,
   getById,
   getOwnerGames,
 } from "../controllers/gamesController";
@@ -18,6 +19,7 @@ const upload = multer({ dest: "uploads", limits: { fileSize: 3000000 } });
 const gamesRouter = express.Router();
 
 gamesRouter.get("/", getAllGames);
+gamesRouter.get("/category/:category", getByCategory);
 gamesRouter.post(
   "/",
   upload.single("image"),
