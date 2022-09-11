@@ -21,16 +21,20 @@ const supaBaseUpload = async (
   try {
     const fileData = await readFile(imagePath);
 
+    const resizedImg = await readFile(path.join("uploads", image));
+
     const storage = supabase.storage.from("gamehouse");
 
-    const uploadResult = await storage.upload(image, fileData);
+    const uploadResult = await storage.upload(`_${image}.webp`, fileData);
+
+    await storage.upload(`_${image}.webp`, resizedImg);
 
     if (uploadResult.error) {
       next(uploadResult.error);
       return;
     }
 
-    const { publicURL } = storage.getPublicUrl(image);
+    const { publicURL } = storage.getPublicUrl(`_${image}.webp`);
 
     req.body.imageBackUp = publicURL;
     next();

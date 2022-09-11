@@ -3,19 +3,14 @@ import path from "path";
 import sharp from "sharp";
 import customError from "../../utils/customError";
 
-const compressImage = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  let { image } = req.body;
+const resizeImg = async (req: Request, res: Response, next: NextFunction) => {
+  const { image } = req.body;
   try {
-    const imageResized = await sharp(path.join("uploads", image))
+    await sharp(path.join("uploads", image))
       .resize(200, 280, { fit: "cover" })
       .webp({ quality: 100 })
       .toFile(path.join("uploads", `_${image}.webp`));
 
-    image = imageResized;
     next();
   } catch (error) {
     const newError = customError(
@@ -27,4 +22,4 @@ const compressImage = async (
   }
 };
 
-export default compressImage;
+export default resizeImg;
