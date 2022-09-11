@@ -5,6 +5,7 @@ import {
   deleteOne,
   editGame,
   getAllGames,
+  getByCategory,
   getById,
   getOwnerGames,
 } from "./gamesController";
@@ -253,6 +254,45 @@ describe("Given gamessController controller", () => {
       };
       const next = jest.fn();
       Game.findByIdAndUpdate = jest.fn().mockRejectedValue(error);
+
+      await editGame(req as Request, res as Response, next as NextFunction);
+
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+
+  describe("When it's invoked with getByCategory method", () => {
+    test("Then it should call the status method with a 200 and json with the games found", async () => {
+      const req = {
+        params: "MOBA" as unknown,
+      } as Partial<Request>;
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({ game }),
+      };
+      const next = jest.fn();
+      Game.find = jest.fn().mockResolvedValue(game);
+
+      await getByCategory(
+        req as Request,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ games: game });
+    });
+    test("Then it should next with an error if the function throw an error ", async () => {
+      const error = new Error();
+      const req = {
+        params: game.category as unknown,
+      } as Partial<Request>;
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue([]),
+      };
+      const next = jest.fn();
+      Game.find = jest.fn().mockRejectedValue(error);
 
       await editGame(req as Request, res as Response, next as NextFunction);
 
