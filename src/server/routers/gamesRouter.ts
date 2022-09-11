@@ -11,6 +11,7 @@ import {
 } from "../controllers/gamesController";
 import authentication from "../middlewares/auth";
 import parserJson from "../middlewares/parserJson";
+import compressImage from "../middlewares/resizeImg";
 import supaBaseUpload from "../middlewares/supaBase";
 
 const upload = multer({ dest: "uploads", limits: { fileSize: 3000000 } });
@@ -22,6 +23,7 @@ gamesRouter.post(
   upload.single("image"),
   authentication,
   parserJson,
+  compressImage,
   supaBaseUpload,
   createGame
 );
@@ -30,6 +32,7 @@ gamesRouter.put(
   upload.single("image"),
   authentication,
   parserJson,
+  compressImage,
   supaBaseUpload,
   editGame
 );
