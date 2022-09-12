@@ -10,13 +10,18 @@ import { Game as IGame } from "../../interfaces/interfaces";
 const debug = Debug("GAMES:Controllers");
 
 export const getAllGames = async (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   let games;
+  const { page = 1, limit = 6 } = req.query;
+
   try {
-    games = await Game.find();
+    games = await Game.find()
+      .limit((limit as number) * 1)
+      .skip(((page as number) - 1) * (limit as number))
+      .exec();
     debug(chalk.yellow("Sending a response from getAllGames"));
   } catch (error) {
     const errorGetAll = customError(
