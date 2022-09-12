@@ -11,6 +11,30 @@ import {
 } from "./gamesController";
 import { Game as IGame } from "../../interfaces/interfaces";
 
+const games: IGame[] = [
+  {
+    title: "Assassins Creed 2",
+    company: "Ubisoft",
+    category: "",
+    dislikes: 0,
+    likes: 0,
+    image: "",
+    owner: "",
+    sinopsis: "",
+    reviews: [""],
+  },
+  {
+    title: "Commandos2",
+    company: "Bethesda",
+    category: "",
+    dislikes: 0,
+    likes: 0,
+    image: "",
+    owner: "",
+    sinopsis: "",
+    reviews: [""],
+  },
+];
 const game = {
   title: "Assassins Creed 2",
   company: "Ubisoft",
@@ -27,7 +51,10 @@ const game = {
 describe("Given gamessController controller", () => {
   beforeEach(() => jest.restoreAllMocks());
   describe("When it's invoqued with getAllGames method", () => {
-    const req: Partial<Request> = {};
+    const req: Partial<Request> = {
+      query: {},
+    };
+
     const next = jest.fn();
     test("Then it should call the status method with a 200", async () => {
       const status = 200;
@@ -35,41 +62,31 @@ describe("Given gamessController controller", () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
-      Game.find = jest.fn().mockResolvedValue([]);
+      Game.find = await jest.fn().mockReturnValue({
+        limit: jest.fn().mockReturnValue({
+          skip: jest.fn().mockReturnValue({
+            exec: jest.fn().mockReturnValue(games),
+          }),
+        }),
+      });
+
       await getAllGames(req as Request, res as Response, next as NextFunction);
 
       expect(res.status).toHaveBeenCalledWith(status);
     });
     test("Then it should call the json method with the games", async () => {
-      const games: IGame[] = [
-        {
-          title: "Assassins Creed 2",
-          company: "Ubisoft",
-          category: "",
-          dislikes: 0,
-          likes: 0,
-          image: "",
-          owner: "",
-          sinopsis: "",
-          reviews: [""],
-        },
-        {
-          title: "Commandos2",
-          company: "Bethesda",
-          category: "",
-          dislikes: 0,
-          likes: 0,
-          image: "",
-          owner: "",
-          sinopsis: "",
-          reviews: [""],
-        },
-      ];
       const res: Partial<Response> = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockResolvedValue(games),
       };
-      Game.find = jest.fn().mockResolvedValue(games);
+      Game.find = await jest.fn().mockReturnValue({
+        limit: jest.fn().mockReturnValue({
+          skip: jest.fn().mockReturnValue({
+            exec: jest.fn().mockReturnValue(games),
+          }),
+        }),
+      });
+
       await getAllGames(req as Request, res as Response, next as NextFunction);
 
       expect(res.json).toHaveBeenCalledWith({ games });
@@ -80,7 +97,8 @@ describe("Given gamessController controller", () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockResolvedValue([]),
       };
-      Game.find = jest.fn().mockRejectedValue(error);
+      Game.find = jest.fn().mockReturnValue(error);
+
       await getAllGames(req as Request, res as Response, next as NextFunction);
 
       expect(next).toHaveBeenCalledWith(error);
