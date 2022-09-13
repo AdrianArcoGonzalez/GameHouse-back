@@ -40,7 +40,7 @@ const newUser = {
   location: "barcelona",
   name: "adrian",
   password: "12345",
-  username: "12345",
+  username: "adrian",
 };
 const userJson = JSON.stringify(newUser);
 const user = userJson;
@@ -71,11 +71,11 @@ describe("Given a register endpoint", () => {
   describe("When it receive a request with post on login with correct data", () => {
     test("Then it should response with status 200 and a token", async () => {
       const expectedStatus = 200;
-      const user2 = { username: "adrian", password: "12345" };
+      const user1 = { username: "adrian", password: "12345" };
       await User.create(userBaseData);
       await request(app)
         .post("/games/users/login")
-        .send(user2)
+        .send(user1)
         .expect(expectedStatus);
     });
 
