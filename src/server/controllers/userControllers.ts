@@ -50,7 +50,7 @@ export const loginUser = async (
   const user = req.body as LoginData;
   let findUser: UserData[];
   try {
-    findUser = await User.find({ name: user.username });
+    findUser = await User.find({ username: user.username });
 
     if (findUser.length === 0) {
       const userError = customError(
