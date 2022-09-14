@@ -60,7 +60,7 @@ describe("Given a register endpoint", () => {
     });
 
     test("And status 401 for a wrong user data", async () => {
-      const expectedStatus = 401;
+      const expectedStatus = 409;
       const user2 = {};
       await request(app)
         .post("/games/users/register")
