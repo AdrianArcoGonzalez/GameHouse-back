@@ -312,7 +312,11 @@ describe("Given gamessController controller", () => {
       const next = jest.fn();
       Game.find = jest.fn().mockRejectedValue(error);
 
-      await editGame(req as Request, res as Response, next as NextFunction);
+      await getByCategory(
+        req as Request,
+        res as Response,
+        next as NextFunction
+      );
 
       expect(next).toHaveBeenCalledWith(error);
     });
