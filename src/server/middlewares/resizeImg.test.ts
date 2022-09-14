@@ -4,12 +4,12 @@ import resizeImg from "./resizeImg";
 
 const mockToFile = jest.fn();
 
-const mockJpeg = jest.fn().mockReturnValue({
+const mockWpeg = jest.fn().mockReturnValue({
   toFile: mockToFile,
 });
 
 let mockResize = jest.fn().mockReturnValue({
-  jpeg: mockJpeg,
+  webp: mockWpeg,
 });
 
 jest.mock("sharp", () => () => ({
